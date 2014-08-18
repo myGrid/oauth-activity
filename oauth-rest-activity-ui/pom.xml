@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>net.sf.taverna.t2.ui-components</groupId>
 			<artifactId>graph-view</artifactId>
-			<version>1.4.1</version>
+			<version>${t2.ui.components.version}</version>
 		</dependency>
     
     
