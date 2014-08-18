@@ -4,7 +4,7 @@
 	
 	<groupId>uk.ac.soton.mib104.t2.activities</groupId>
 	<artifactId>oauth</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<packaging>pom</packaging>
 	<name>OAuth Taverna project</name>
 	
