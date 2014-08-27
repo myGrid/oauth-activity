@@ -26,95 +26,15 @@ import net.sf.taverna.t2.workbench.ui.views.contextualviews.activity.ActivityCon
 
 import uk.ac.soton.mib104.t2.activities.oauth.OAuthActivity;
 import uk.ac.soton.mib104.t2.activities.oauth.OAuthActivityConfigurationBean;
+import uk.ac.soton.mib104.t2.activities.oauth.ui.view.IconManager;
 import uk.ac.soton.mib104.t2.activities.oauth.util.ApiDescImpl;
-import uk.ac.soton.mib104.t2.activities.oauth.util.IconManager;
 import uk.ac.soton.mib104.t2.activities.oauth.util.HttpVerb;
 import uk.ac.soton.mib104.t2.activities.oauth.util.Format;
 
 @SuppressWarnings("serial")
 public class OAuthConfigurationPanel extends ActivityConfigurationPanel<OAuthActivity, OAuthActivityConfigurationBean> {
 	
-	public static final JTabbedPane createPane(final OAuthActivityConfigurationBean configBean, final Component fieldRequestTokenEndpoint, final Component fieldRequestTokenVerb, final Component fieldAuthorizationEndpoint, final Component fieldAccessTokenEndpoint, final Component fieldAccessTokenFormat, final Component fieldAccessTokenVerb) {
-		final JTabbedPane tabbedPane = new JTabbedPane();
-		
-		tabbedPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		tabbedPane.add("Settings", createPaneSettings(configBean, fieldRequestTokenEndpoint, fieldRequestTokenVerb, fieldAuthorizationEndpoint, fieldAccessTokenEndpoint, fieldAccessTokenFormat, fieldAccessTokenVerb));
-		tabbedPane.add("Help", createPaneHelp(configBean));
-		
-		return tabbedPane;
-	}
-
-	private static final JPanel createPaneHelp(final OAuthActivityConfigurationBean configBean) {
-		if (configBean == null) {
-			new NullPointerException("configBean");
-		}
-		
-		final ApiDescImpl apiDesc = configBean.isRequestTokenRequired() ? ApiDescImpl.OAuth10a : ApiDescImpl.OAuth20_draft10;
-		
-		final JPanel contentPane = new JPanel();
-		contentPane.setLayout(new GridBagLayout());
-		
-		{
-			final JLabel l = new JLabel(IconManager.getLargeIcon());
-			final GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.BOTH;
-			c.gridx = 0;
-			c.gridy = 0;
-			c.gridwidth = 1;
-			c.gridheight = 4;
-			c.insets = new Insets(5, 5, 5, 10);
-			contentPane.add(l, c);
-		}
-		
-		{
-			final JLabel l = new JLabel(apiDesc.getPreferredName());
-			l.setToolTipText(apiDesc.getAltName());
-			l.setFont(new Font(l.getFont().getName(), Font.BOLD, l.getFont().getSize()));
-			final GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 1;
-			c.gridy = 0;
-			contentPane.add(l, c);
-		}
-		
-		{
-			final JLabel l = new JLabel(String.format("<html><a href=\"%s\">%s</a>", apiDesc.getDocumentationEndpoint(), apiDesc.getDocumentationEndpoint()));
-			l.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			l.addMouseListener(new MouseAdapter() {
-
-				@Override
-				public void mouseClicked(final MouseEvent e) {
-					if (Desktop.isDesktopSupported()) {
-						final Desktop desktop = Desktop.getDesktop();
-						
-						if ((desktop != null) && desktop.isSupported(Desktop.Action.BROWSE)) {
-							try {
-								desktop.browse(URI.create(apiDesc.getDocumentationEndpoint()));
-							} catch (final IOException ex) {
-								// Do nothing...
-							}
-						}
-					}
-					
-					return;
-				}
-				
-			});
-			final GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 1;
-			c.gridy = 1;
-			contentPane.add(l, c);
-		}
-		
-		return contentPane;
-	}
-	
-	private static final JPanel createPaneSettings(final OAuthActivityConfigurationBean configBean, final Component fieldRequestTokenEndpoint, final Component fieldRequestTokenVerb, final Component fieldAuthorizationEndpoint, final Component fieldAccessTokenEndpoint, final Component fieldAccessTokenFormat, final Component fieldAccessTokenVerb) {
-		if (configBean == null) {
-			new NullPointerException("configBean");
-		}
-		
+	public static final JPanel createPane(final OAuthActivityConfigurationBean configBean, final Component fieldRequestTokenEndpoint, final Component fieldRequestTokenVerb, final Component fieldAuthorizationEndpoint, final Component fieldAccessTokenEndpoint, final Component fieldAccessTokenFormat, final Component fieldAccessTokenVerb) {
 		final JPanel contentPane = new JPanel();
 		contentPane.setLayout(new GridBagLayout());
 		
@@ -126,7 +46,7 @@ public class OAuthConfigurationPanel extends ActivityConfigurationPanel<OAuthAct
 		int x = 0, y = 0;
 		
 		if (configBean.isRequestTokenRequired()) {
-			final JLabel labelRequestTokenEndpoint = new JLabel("Request Token URL:", getInformationIcon(), JLabel.LEFT);
+			final JLabel labelRequestTokenEndpoint = new JLabel("Request Token URL:", JLabel.LEFT);
 			labelRequestTokenEndpoint.setToolTipText("Configures the URL that is used to obtain Request Tokens.");
 			c.gridx = x++;
 			c.gridy = y;
@@ -149,7 +69,7 @@ public class OAuthConfigurationPanel extends ActivityConfigurationPanel<OAuthAct
 		}
 		
 		{
-			final JLabel labelAuthorizationEndpoint = new JLabel("User Authorization URL:", getInformationIcon(), JLabel.LEFT);
+			final JLabel labelAuthorizationEndpoint = new JLabel("User Authorization URL:", JLabel.LEFT);
 			labelAuthorizationEndpoint.setToolTipText("Configures the URL that is used to obtain OAuth Verifiers.");
 			c.gridx = x++;
 			c.gridy = y;
@@ -168,7 +88,7 @@ public class OAuthConfigurationPanel extends ActivityConfigurationPanel<OAuthAct
 		}
 		
 		{
-			final JLabel labelAccessTokenEndpoint = new JLabel("Access Token URL:", getInformationIcon(), JLabel.LEFT);
+			final JLabel labelAccessTokenEndpoint = new JLabel("Access Token URL:", JLabel.LEFT);
 			labelAccessTokenEndpoint.setToolTipText("Configures the URL that is used to obtain Access Tokens.");
 			c.gridx = x++;
 			c.gridy = y;
@@ -211,16 +131,6 @@ public class OAuthConfigurationPanel extends ActivityConfigurationPanel<OAuthAct
 				return a.equals(b);
 			}
 		}
-	}
-	
-	private static Icon ICON_INFORMATION;
-	
-	public static Icon getInformationIcon() {
-		if (ICON_INFORMATION == null) {
-			ICON_INFORMATION = new ImageIcon(OAuthConfigurationPanel.class.getResource("/information.png"));
-		}
-		
-		return ICON_INFORMATION;
 	}
 	
 	private final OAuthActivity activity;

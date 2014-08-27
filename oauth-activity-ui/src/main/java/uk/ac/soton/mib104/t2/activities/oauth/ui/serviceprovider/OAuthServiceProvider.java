@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+import uk.ac.soton.mib104.t2.activities.oauth.ui.view.IconManager;
 import uk.ac.soton.mib104.t2.activities.oauth.util.ApiDescImpl;
-import uk.ac.soton.mib104.t2.activities.oauth.util.IconManager;
 
 import net.sf.taverna.t2.servicedescriptions.ServiceDescription;
 import net.sf.taverna.t2.servicedescriptions.ServiceDescriptionProvider;

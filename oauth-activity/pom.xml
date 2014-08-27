@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>uk.ac.soton.mib104.t2.activities</groupId>
 		<artifactId>oauth</artifactId>
-		<version>0.0.3</version>
+		<version>0.0.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>oauth-activity</artifactId>
 	<name>OAuth Taverna activity</name>
@@ -25,6 +25,11 @@
 			<groupId>net.sf.taverna.t2.activities</groupId>
 			<artifactId>oauth-rest-activity</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.taverna.t2.activities</groupId>
+			<artifactId>interaction-activity</artifactId>
+			<version>${t2.activities.version}</version>
 		</dependency>
 		<dependency>
 		  <groupId>org.scribe</groupId>
