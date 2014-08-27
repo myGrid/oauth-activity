@@ -3,8 +3,6 @@ package uk.ac.soton.mib104.t2.activities.oauth.ui.view;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import net.sf.taverna.t2.activities.beanshell.servicedescriptions.BeanshellActivityIcon;
-
 /**
  * IconManager is a factory for icons.
  * 
