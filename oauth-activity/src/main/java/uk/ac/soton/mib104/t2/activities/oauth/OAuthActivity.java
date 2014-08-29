@@ -2,6 +2,8 @@ package uk.ac.soton.mib104.t2.activities.oauth;
 
 import java.util.Map;
 
+import org.apache.velocity.app.Velocity;
+
 import net.sf.taverna.t2.activities.interaction.InteractionActivityRunnable;
 import net.sf.taverna.t2.reference.T2Reference;
 import net.sf.taverna.t2.workflowmodel.processor.activity.AbstractAsynchronousActivity;
@@ -92,7 +94,7 @@ public class OAuthActivity extends
 
 		OAuthInteractionCallbackRequestor requestor = new OAuthInteractionCallbackRequestor(
 				this, oauthActivityInputs, callback);
-		callback.requestRun(new InteractionActivityRunnable(requestor, null));
+		callback.requestRun(new InteractionActivityRunnable(requestor, Velocity.getTemplate("oauth")));
 	}
 
 	@Override
