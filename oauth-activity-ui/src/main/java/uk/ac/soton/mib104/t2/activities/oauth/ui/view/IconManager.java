@@ -1,9 +1,13 @@
 package uk.ac.soton.mib104.t2.activities.oauth.ui.view;
 
+import java.awt.Component;
+import java.awt.Graphics;
+
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import net.sf.taverna.t2.activities.beanshell.servicedescriptions.BeanshellActivityIcon;
+import net.sf.taverna.t2.workbench.activityicons.DefaultActivityIcon;
+
 
 /**
  * IconManager is a factory for icons.
@@ -31,7 +35,7 @@ public final class IconManager {
 		}
 		
 		if (ICON_SMALL == null) {
-			return BeanshellActivityIcon.getBeanshellIcon();
+			ICON_SMALL_REST = new EmptyIcon(16,16);
 		}
 		return ICON_SMALL;
 	}
@@ -51,7 +55,7 @@ public final class IconManager {
 		}
 		
 		if (ICON_SMALL_REST == null) {
-			return BeanshellActivityIcon.getBeanshellIcon();			
+			ICON_SMALL_REST = new EmptyIcon(18,18);			
 		}
 		return ICON_SMALL_REST;
 	}
@@ -62,5 +66,32 @@ public final class IconManager {
 	private IconManager() {
 		super();
 	}
+	
+	private static final class EmptyIcon  implements Icon {
+
+		  private int width;
+		  private int height;
+		  
+		  public EmptyIcon() {
+		    this(0, 0);
+		  }
+		  
+		  public EmptyIcon(int width, int height) {
+		    this.width = width;
+		    this.height = height;
+		  }
+
+		  public int getIconHeight() {
+		    return height;
+		  }
+
+		  public int getIconWidth() {
+		    return width;
+		  }
+
+		  public void paintIcon(Component c, Graphics g, int x, int y) {
+		  }
+
+		}
 
 }
